@@ -166,13 +166,8 @@ export default function App() {
       {/* ══════════ CORE BELIEFS ══════════ */}
       <section className="py-8 flex flex-col items-center z-10" style={{ background: "#EFF6FF" }}>
         <div
-          className="relative mx-4 rounded-3xl overflow-hidden"
-          style={{
-            width: "calc(100% - 32px)", maxWidth: "420px", aspectRatio: "1 / 1",
-            background: "linear-gradient(145deg, #DBEAFE 0%, #EFF6FF 100%)",
-            border: "1px solid #BFDBFE",
-            boxShadow: "0 4px 24px rgba(59,130,246,0.06)",
-          }}
+          className="relative w-full max-w-[420px]"
+          style={{ aspectRatio: "1 / 1" }}
         >
           {/* 8 icons — màu xanh dịu #3B82F6 */}
           {[
