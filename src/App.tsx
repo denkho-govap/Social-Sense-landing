@@ -22,8 +22,9 @@ import {
   Zap,
   Target,
   TrendingUp,
+  CreditCard,
 } from "lucide-react";
-import { PostStack } from "./components/PostStack";
+import { PricingSection } from "./components/PricingSection";
 
 // ----- FAQ Item -----
 const faqList = [
@@ -112,7 +113,7 @@ export default function App() {
             {[
               { label: "Về chúng tôi", target: "about" },
               { label: "Tính năng", target: "features-mobile" },
-              { label: "Tips sử dụng", target: "posts" },
+              { label: "Bảng giá", target: "pricing" },
               { label: "F&Q", target: "faq" },
             ].map((item) => (
               <button
@@ -291,13 +292,13 @@ export default function App() {
           </div>
         </section>
 
-        {/* TIPS SỬ DỤNG (Mobile) */}
-        <section id="posts" className="pt-8 pb-14 flex flex-col items-center w-full z-10 relative overflow-hidden" style={{ background: "#DBEAFE" }}>
+        {/* BẢNG GIÁ DỊCH VỤ (Mobile) */}
+        <section id="pricing" className="pt-8 pb-14 flex flex-col items-center w-full z-10 relative overflow-hidden" style={{ background: "#DBEAFE" }}>
           <div className="bg-white px-5 py-2 rounded-full mb-8 border border-blue-200 shadow-sm flex items-center gap-2">
-            <Lightbulb className="w-3.5 h-3.5 text-blue-600" />
-            <p className="text-[10px] font-extrabold tracking-widest text-blue-600">TIPS SỬ DỤNG</p>
+            <CreditCard className="w-3.5 h-3.5 text-blue-600" />
+            <p className="text-[10px] font-extrabold tracking-widest text-blue-600">BẢNG GIÁ DỊCH VỤ</p>
           </div>
-          <PostStack />
+          <PricingSection />
         </section>
 
         {/* FAQ (Mobile) */}
@@ -387,7 +388,7 @@ export default function App() {
             <div className="flex items-center gap-10">
               <button onClick={() => scrollToSection("about-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Về chúng tôi</button>
               <button onClick={() => scrollToSection("features-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Tính năng</button>
-              <button onClick={() => scrollToSection("posts-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Tips sử dụng</button>
+              <button onClick={() => scrollToSection("pricing-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Bảng giá</button>
               <button onClick={() => scrollToSection("faq-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">F&Q</button>
             </div>
 
@@ -652,15 +653,15 @@ export default function App() {
           </div>
         </section>
 
-        {/* DESKTOP TIPS SỬ DỤNG */}
-        <section id="posts-desktop" className="py-20 bg-blue-100/60 border-y border-blue-200/50">
+        {/* DESKTOP BẢNG GIÁ DỊCH VỤ */}
+        <section id="pricing-desktop" className="py-20 bg-blue-100/60 border-y border-blue-200/50">
           <div className="max-w-7xl mx-auto px-8 flex flex-col items-center">
-            <span className="px-6 py-2.5 rounded-full text-xs lg:text-sm font-extrabold tracking-widest bg-white text-blue-600 border border-blue-200 mb-12 shadow-sm flex items-center gap-2">
-              <Lightbulb className="w-4 h-4 text-blue-600" />
-              <span>TIPS SỬ DỤNG</span>
+            <span className="px-6 py-2.5 rounded-full text-xs lg:text-sm font-extrabold tracking-widest bg-white text-blue-600 border border-blue-200 mb-10 shadow-sm flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-blue-600" />
+              <span>BẢNG GIÁ DỊCH VỤ</span>
             </span>
-            <div className="w-full max-w-4xl flex justify-center">
-              <PostStack />
+            <div className="w-full flex justify-center">
+              <PricingSection />
             </div>
           </div>
         </section>
