@@ -17,14 +17,10 @@ import {
   ImageIcon,
   Sparkles,
   BarChart2,
+  Send,
+  Lightbulb,
 } from "lucide-react";
 import { PostStack } from "./components/PostStack";
-
-// ── Hệ màu dịu nhẹ ──
-// BG chính : #EFF6FF  (Xanh nhạt dịu)
-// Card tint : #DBEAFE  (Xanh pastel)
-// Accent    : #3B82F6  (Xanh dương dịu)
-// Soft Blue : #60A5FA  (Xanh dương nhạt)
 
 // ----- FAQ Item -----
 const faqList = [
@@ -49,18 +45,18 @@ const faqList = [
 const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="w-full bg-white rounded-2xl overflow-hidden shadow-sm transition-all duration-300" style={{ border: "1px solid #BFDBFE" }}>
+    <div className="w-full bg-white rounded-2xl overflow-hidden shadow-sm transition-all duration-300 border border-blue-200">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full min-h-[50px] flex items-center justify-between px-5 text-left py-3"
+        className="w-full min-h-[50px] flex items-center justify-between px-5 text-left py-3.5 hover:bg-blue-50/50 transition-colors"
       >
-        <span className="text-[13px] font-semibold text-slate-700 leading-snug pr-2">{question}</span>
+        <span className="text-[13.5px] font-bold text-slate-800 leading-snug pr-2">{question}</span>
         <ChevronDown
           className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180 text-blue-600" : "text-slate-400"}`}
         />
       </button>
       {open && (
-        <div className="px-5 pb-4 pt-1 text-[11.5px] text-slate-500 leading-relaxed border-t border-blue-50 bg-blue-50/30">
+        <div className="px-5 pb-4 pt-2 text-[12px] text-slate-600 leading-relaxed border-t border-blue-50 bg-blue-50/30">
           {answer}
         </div>
       )}
@@ -90,7 +86,7 @@ export default function App() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (email.trim()) {
-      alert(`Cảm ơn bạn đã đăng ký với email: ${email}`);
+      alert(`Cảm ơn bạn đã đăng ký trải nghiệm với email: ${email}`);
       setEmail("");
       registrationRef.current?.blur();
     }
@@ -98,27 +94,28 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen font-sans text-black selection:bg-blue-300 selection:text-white flex flex-col w-full relative overflow-x-hidden"
+      className="min-h-screen font-sans text-slate-900 selection:bg-blue-400 selection:text-white flex flex-col w-full relative overflow-x-hidden"
       style={{ background: "#EFF6FF" }}
     >
 
       {/* ════════════════════════════════════════════════════════════════
-          MOBILE VIEW ONLY (< md): Keep exact original mobile layout untouched
+          MOBILE VIEW ONLY (< md)
          ════════════════════════════════════════════════════════════════ */}
       <div className="block md:hidden w-full max-w-[480px] mx-auto shadow-2xl relative" style={{ background: "#EFF6FF" }}>
         
-        {/* NAV (Mobile) */}
-        <div className="sticky top-4 z-50 px-4 mt-4">
-          <nav className="w-full h-12 bg-slate-500/60 backdrop-blur-md border border-white/20 rounded-[20px] flex items-center justify-around px-4 shadow-sm">
+        {/* NAV (Mobile Sticky Header) */}
+        <div className="sticky top-0 z-50 px-3 py-2 bg-blue-50/80 backdrop-blur-lg border-b border-blue-200/60 shadow-sm">
+          <nav className="w-full h-11 bg-slate-800/80 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-around px-3 shadow-md">
             {[
               { label: "Về chúng tôi", target: "about" },
-              { label: "Bài viết", target: "posts" },
+              { label: "Tính năng", target: "features-mobile" },
+              { label: "Tips sử dụng", target: "posts" },
               { label: "F&Q", target: "faq" },
             ].map((item) => (
               <button
                 key={item.target}
                 onClick={() => scrollToSection(item.target)}
-                className="text-white text-xs font-medium tracking-wide hover:opacity-80 transition-opacity whitespace-nowrap px-2 py-2"
+                className="text-white text-[11px] font-semibold tracking-wide hover:text-blue-300 transition-colors whitespace-nowrap px-1.5 py-1"
               >
                 {item.label}
               </button>
@@ -127,19 +124,22 @@ export default function App() {
         </div>
 
         {/* HERO (Mobile) */}
-        <section id="about" className="pt-8 flex flex-col relative z-10" style={{ overflow: "hidden", background: "#EFF6FF" }}>
-          <div className="px-6 mb-5">
-            <img src="/logo.png" alt="Social Sense" className="h-10 w-auto object-contain" />
+        <section id="about" className="pt-6 flex flex-col relative z-10" style={{ overflow: "hidden", background: "#EFF6FF" }}>
+          <div className="px-6 mb-4">
+            <img src="/logo.png" alt="Social Sense" className="h-9 w-auto object-contain" />
           </div>
 
-          <div className="px-6 z-20" style={{ width: "60%" }}>
-            <h1 className="text-[38px] font-bold leading-[1.1] tracking-tight text-black">
-              Trợ lí tí hon <br />cho các nhà<br />sáng tạo
+          <div className="px-6 z-20" style={{ width: "65%" }}>
+            <h1 className="text-[34px] font-black leading-[1.15] tracking-tight text-slate-900">
+              Trợ lý tí hon <br />
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                cho các nhà sáng tạo
+              </span>
             </h1>
           </div>
 
           {/* Stickman (Mobile) */}
-          <div style={{ position: "absolute", right: "-30px", top: "30px", width: "320px", height: "360px", overflow: "hidden", zIndex: 30, pointerEvents: "none" }}>
+          <div style={{ position: "absolute", right: "-35px", top: "25px", width: "320px", height: "360px", overflow: "hidden", zIndex: 30, pointerEvents: "none" }}>
             <img
               src="/stickman.png"
               alt="Social Sense Stickman"
@@ -154,35 +154,46 @@ export default function App() {
             />
           </div>
 
-          {/* White CTA card (Mobile) */}
-          <div className="bg-white w-full relative px-6 pt-10 pb-8 rounded-t-[30px]" style={{ marginTop: "200px", zIndex: 20, boxShadow: "0 -2px 16px rgba(164,198,57,0.08)" }}>
-            <a
-              href="https://drive.google.com/drive/folders/1Cyp88viSs6DUMPWnxFKvtknxyuWIaxMy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 w-full max-w-[290px] h-14 px-5 rounded-2xl active:scale-95 transition-all duration-150"
-              style={{
-                background: "#A4C639",
-                boxShadow: "0 2px 12px rgba(164,198,57,0.30)",
-              }}
-            >
-              <svg width="28" height="28" viewBox="0 0 48 48" fill="#1A1A1A" className="shrink-0">
-                <line x1="16" y1="9" x2="11" y2="3" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
-                <line x1="32" y1="9" x2="37" y2="3" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M8 22 C8 13.16 15.16 6 24 6 C32.84 6 40 13.16 40 22 L8 22 Z"/>
-                <circle cx="17.5" cy="17" r="2" fill="#A4C639"/>
-                <circle cx="30.5" cy="17" r="2" fill="#A4C639"/>
-                <rect x="8" y="23" width="32" height="18" rx="3"/>
-                <rect x="1" y="23" width="6" height="14" rx="3"/>
-                <rect x="41" y="23" width="6" height="14" rx="3"/>
-                <rect x="12" y="40" width="8" height="7" rx="3"/>
-                <rect x="28" y="40" width="8" height="7" rx="3"/>
-              </svg>
-              <span className="flex flex-col leading-tight">
-                <span className="text-[10px] font-semibold" style={{ color: "rgba(0,0,0,0.55)" }}>Tải về cho Android</span>
-                <span className="text-[14px] font-bold tracking-tight text-[#1A1A1A]">Dùng thử miễn phí</span>
-              </span>
-            </a>
+          {/* White CTA card (Mobile with 'Đăng ký trải nghiệm' button) */}
+          <div className="bg-white w-full relative px-6 pt-8 pb-7 rounded-t-[30px]" style={{ marginTop: "180px", zIndex: 20, boxShadow: "0 -4px 20px rgba(59,130,246,0.12)" }}>
+            <div className="flex flex-col gap-3 w-full max-w-[320px] mx-auto">
+              <a
+                href="https://drive.google.com/drive/folders/1Cyp88viSs6DUMPWnxFKvtknxyuWIaxMy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 w-full h-13 px-5 rounded-2xl active:scale-95 transition-all duration-150 shadow-md"
+                style={{
+                  background: "#A4C639",
+                  boxShadow: "0 4px 14px rgba(164,198,57,0.35)",
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 48 48" fill="#1A1A1A" className="shrink-0">
+                  <line x1="16" y1="9" x2="11" y2="3" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
+                  <line x1="32" y1="9" x2="37" y2="3" stroke="#1A1A1A" strokeWidth="2.5" strokeLinecap="round"/>
+                  <path d="M8 22 C8 13.16 15.16 6 24 6 C32.84 6 40 13.16 40 22 L8 22 Z"/>
+                  <circle cx="17.5" cy="17" r="2" fill="#A4C639"/>
+                  <circle cx="30.5" cy="17" r="2" fill="#A4C639"/>
+                  <rect x="8" y="23" width="32" height="18" rx="3"/>
+                  <rect x="1" y="23" width="6" height="14" rx="3"/>
+                  <rect x="41" y="23" width="6" height="14" rx="3"/>
+                  <rect x="12" y="40" width="8" height="7" rx="3"/>
+                  <rect x="28" y="40" width="8" height="7" rx="3"/>
+                </svg>
+                <span className="flex flex-col leading-tight">
+                  <span className="text-[9.5px] font-semibold" style={{ color: "rgba(0,0,0,0.6)" }}>Tải về cho Android</span>
+                  <span className="text-[13.5px] font-extrabold tracking-tight text-[#1A1A1A]">Dùng thử miễn phí</span>
+                </span>
+              </a>
+
+              {/* Added explicit 'Đăng ký trải nghiệm' button for mobile */}
+              <button
+                type="button"
+                onClick={focusRegistration}
+                className="w-full h-11 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center transition-all shadow-md active:scale-95"
+              >
+                Đăng ký trải nghiệm
+              </button>
+            </div>
           </div>
         </section>
 
@@ -204,7 +215,7 @@ export default function App() {
               </div>
             ))}
             <div className="absolute inset-0 flex flex-col items-center justify-center px-12 text-center">
-              <p className="text-[11px] font-semibold mb-1.5" style={{ color: "#3B82F6" }}>Chúng tôi tin rằng</p>
+              <p className="text-[11px] font-bold mb-1.5" style={{ color: "#3B82F6" }}>Chúng tôi tin rằng</p>
               <h2 className="text-[20px] font-bold leading-[1.25] text-slate-800">
                 mỗi ý tưởng đều xứng đáng<br />được bắt đầu
               </h2>
@@ -212,91 +223,105 @@ export default function App() {
           </div>
         </section>
 
-        {/* FEATURES (Mobile) */}
-        <section className="flex flex-col items-center w-full z-10" style={{ background: "#EFF6FF" }}>
-          <div className="mt-2 mb-8 px-5 py-2 rounded-full" style={{ background: "#DBEAFE", border: "1px solid #BFDBFE" }}>
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: "#3B82F6" }}>SOCIAL SENSE CÓ NHỮNG GÌ?</p>
+        {/* FEATURES (Mobile with rich visual images) */}
+        <section id="features-mobile" className="flex flex-col items-center w-full z-10" style={{ background: "#EFF6FF" }}>
+          <div className="mt-2 mb-6 px-5 py-2 rounded-full bg-blue-100 border border-blue-200 shadow-sm">
+            <p className="text-[10px] font-extrabold tracking-widest text-blue-600">SOCIAL SENSE CÓ NHỮNG GÌ?</p>
           </div>
-          <div className="w-full space-y-3 px-4 pb-10">
-            <div className="bg-white rounded-3xl overflow-hidden shadow-sm" style={{ border: "1px solid #DBEAFE" }}>
-              <div className="p-5 flex gap-4 items-center">
-                <div className="shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#60A5FA,#3B82F6)" }}>
-                  <ImageIcon className="text-white w-7 h-7" />
+
+          <div className="w-full space-y-4 px-4 pb-10">
+            {/* Feature 1 */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-blue-100 p-5">
+              <div className="flex gap-4 items-center mb-3">
+                <div className="shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#60A5FA,#3B82F6)" }}>
+                  <ImageIcon className="text-white w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-[16px] font-bold text-slate-800 mb-1">Không lo bế tắc</h3>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">công cụ gợi ý caption, tạo hình ảnh bài đăng theo ý muốn của bạn</p>
+                  <h3 className="text-[15px] font-bold text-slate-900">Không lo bế tắc</h3>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">Công cụ gợi ý caption, xây dựng kịch bản video xu hướng và thiết kế bài đăng theo ý muốn.</p>
                 </div>
               </div>
-              <div className="h-1 w-full" style={{ background: "linear-gradient(90deg,#60A5FA,#93C5FD)" }} />
-            </div>
-
-            <div className="bg-white rounded-3xl overflow-hidden shadow-sm" style={{ border: "1px solid #DBEAFE" }}>
-              <div className="p-5 flex gap-4 items-center flex-row-reverse">
-                <div className="shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3B82F6,#2563EB)" }}>
-                  <BarChart2 className="text-white w-7 h-7" />
-                </div>
-                <div className="flex-1 text-right">
-                  <h3 className="text-[16px] font-bold text-slate-800 mb-1">Hỗ trợ qua các con số</h3>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">báo cáo số liệu hữu ích, giúp bạn hiểu nền tảng của mình</p>
-                </div>
+              <div className="w-full overflow-hidden rounded-2xl border border-blue-100/80 shadow-sm mt-2">
+                <img src="/card_features.png" alt="Không lo bế tắc" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300" />
               </div>
-              <div className="h-1 w-full" style={{ background: "linear-gradient(90deg,#3B82F6,#60A5FA)" }} />
+              <div className="h-1 w-full mt-4 rounded-full" style={{ background: "linear-gradient(90deg,#60A5FA,#93C5FD)" }} />
             </div>
 
-            <div className="bg-white rounded-3xl overflow-hidden shadow-sm" style={{ border: "1px solid #DBEAFE" }}>
-              <div className="p-5 flex gap-4 items-center">
-                <div className="shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#93C5FD,#60A5FA)" }}>
-                  <Sparkles className="text-white w-7 h-7" />
+            {/* Feature 2 */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-blue-100 p-5">
+              <div className="flex gap-4 items-center mb-3">
+                <div className="shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#3B82F6,#2563EB)" }}>
+                  <BarChart2 className="text-white w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-[16px] font-bold text-slate-800 mb-1">Xây dựng phong cách mình muốn</h3>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">cá nhân hoá AI theo người dùng</p>
+                  <h3 className="text-[15px] font-bold text-slate-900">Hỗ trợ qua các con số</h3>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">Báo cáo số liệu hữu ích, giúp bạn thấu hiểu nền tảng và tối ưu thời điểm đăng bài.</p>
                 </div>
               </div>
-              <div className="h-1 w-full" style={{ background: "linear-gradient(90deg,#93C5FD,#3B82F6)" }} />
+              <div className="w-full overflow-hidden rounded-2xl border border-blue-100/80 shadow-sm mt-2">
+                <img src="/card_trend.png" alt="Hỗ trợ qua các con số" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300" />
+              </div>
+              <div className="h-1 w-full mt-4 rounded-full" style={{ background: "linear-gradient(90deg,#3B82F6,#60A5FA)" }} />
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-blue-100 p-5">
+              <div className="flex gap-4 items-center mb-3">
+                <div className="shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg,#93C5FD,#60A5FA)" }}>
+                  <Sparkles className="text-white w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-[15px] font-bold text-slate-900">Xây dựng phong cách mình muốn</h3>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">Cá nhân hoá AI theo từng người dùng để truyền tải chuẩn phong cách thương hiệu.</p>
+                </div>
+              </div>
+              <div className="w-full overflow-hidden rounded-2xl border border-blue-100/80 shadow-sm mt-2">
+                <img src="/card_engagement.png" alt="Xây dựng phong cách" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300" />
+              </div>
+              <div className="h-1 w-full mt-4 rounded-full" style={{ background: "linear-gradient(90deg,#93C5FD,#3B82F6)" }} />
             </div>
           </div>
         </section>
 
-        {/* POSTS (Mobile) */}
+        {/* TIPS SỬ DỤNG (Mobile) */}
         <section id="posts" className="pt-8 pb-14 flex flex-col items-center w-full z-10 relative overflow-hidden" style={{ background: "#DBEAFE" }}>
-          <div className="bg-white px-5 py-2 rounded-full mb-10" style={{ border: "1px solid #BFDBFE" }}>
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: "#3B82F6" }}>CÁC BÀI VIẾT MỚI</p>
+          <div className="bg-white px-5 py-2 rounded-full mb-8 border border-blue-200 shadow-sm flex items-center gap-2">
+            <Lightbulb className="w-3.5 h-3.5 text-blue-600" />
+            <p className="text-[10px] font-extrabold tracking-widest text-blue-600">TIPS SỬ DỤNG</p>
           </div>
           <PostStack />
         </section>
 
         {/* FAQ (Mobile) */}
         <section id="faq" className="pt-10 pb-12 flex flex-col items-center w-full z-10 px-5" style={{ background: "#EFF6FF" }}>
-          <div className="px-5 py-2 rounded-full mb-8" style={{ background: "#DBEAFE", border: "1px solid #BFDBFE" }}>
-            <p className="text-[10px] font-bold tracking-widest" style={{ color: "#3B82F6" }}>CÁC CÂU HỎI THƯỜNG GẶP</p>
+          <div className="px-5 py-2 rounded-full mb-8 bg-blue-100 border border-blue-200 shadow-sm">
+            <p className="text-[10px] font-extrabold tracking-widest text-blue-600">CÁC CÂU HỎI THƯỜNG GẶP</p>
           </div>
-          <div className="w-full rounded-3xl p-4 space-y-3" style={{ background: "#DBEAFE", border: "1px solid #BFDBFE" }}>
+          <div className="w-full rounded-3xl p-4 space-y-3 bg-blue-100/60 border border-blue-200">
             {faqList.map((item, i) => (
               <FAQItem key={i} question={item.question} answer={item.answer} />
             ))}
           </div>
         </section>
 
-        {/* FOOTER (Mobile) */}
+        {/* FOOTER (Mobile with Visible Submit Button) */}
         <section id="contact" className="pt-10 pb-8 px-6 text-white w-full z-10" style={{ background: "#3B82F6" }}>
           <div className="flex gap-4 items-start mb-8">
             <img src="/logo.png" alt="Social Sense" className="h-8 w-auto mt-1 object-contain" style={{ filter: "brightness(0) invert(1)", opacity: 0.95 }} />
-            <p className="text-[10px] leading-relaxed flex-1" style={{ color: "rgba(255,255,255,0.85)" }}>
-              Công cụ hỗ trợ các nhà sáng tạo nội dung tạo bài viết, phân tích chỉ số và theo dõi trend cơ bản
+            <p className="text-[10.5px] leading-relaxed flex-1 text-blue-50">
+              Social Sense - Trợ lý AI hỗ trợ các nhà sáng tạo nội dung tự động tạo bài viết, phân tích chỉ số và bắt trend hiệu quả.
             </p>
           </div>
 
           <div className="space-y-5">
             <div>
-              <h3 className="text-base font-bold mb-2 text-white">Liên hệ với chúng tôi</h3>
-              <div className="flex h-11 rounded-full overflow-hidden shadow-sm">
-                <div className="w-20 flex items-center justify-center text-xs font-bold shrink-0" style={{ background: "rgba(255,255,255,0.22)", color: "white" }}>
+              <h3 className="text-sm font-bold mb-2 text-white">Liên hệ với chúng tôi</h3>
+              <div className="flex h-11 rounded-full overflow-hidden shadow-sm bg-white p-1">
+                <div className="w-16 flex items-center justify-center text-[11px] font-bold shrink-0 bg-blue-100 text-blue-700 rounded-full my-0.5 ml-0.5">
                   Gmail
                 </div>
-                <div className="flex-1 bg-white flex items-center px-4">
-                  <a href="mailto:socialsense@gmail.com" className="text-sm font-semibold" style={{ color: "#2563EB" }}>
+                <div className="flex-1 bg-white flex items-center px-3">
+                  <a href="mailto:socialsense@gmail.com" className="text-xs font-bold text-blue-600 truncate">
                     socialsense@gmail.com
                   </a>
                 </div>
@@ -304,12 +329,12 @@ export default function App() {
             </div>
 
             <div>
-              <h3 className="text-base font-bold mb-2 text-white">Hoặc đăng kí để tải bản thử nghiệm</h3>
-              <form onSubmit={handleSubmit} className="flex h-11 rounded-full overflow-hidden shadow-sm">
-                <div className="w-20 flex items-center justify-center text-xs font-bold shrink-0" style={{ background: "rgba(255,255,255,0.22)", color: "white" }}>
+              <h3 className="text-sm font-bold mb-2 text-white">Đăng ký bản thử nghiệm</h3>
+              <form onSubmit={handleSubmit} className="flex h-11 rounded-full overflow-hidden shadow-sm bg-white p-1">
+                <div className="w-16 flex items-center justify-center text-[11px] font-bold shrink-0 bg-blue-100 text-blue-700 rounded-full my-0.5 ml-0.5">
                   Gmail
                 </div>
-                <div className="flex-1 bg-white flex items-center px-4">
+                <div className="flex-1 bg-white flex items-center px-2">
                   <input
                     ref={registrationRef}
                     type="email"
@@ -317,15 +342,22 @@ export default function App() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="email của bạn"
                     required
-                    className="w-full outline-none bg-transparent text-sm text-slate-600 placeholder-slate-400"
+                    className="w-full outline-none bg-transparent text-xs text-slate-700 placeholder-slate-400"
                   />
                 </div>
-                <button type="submit" className="hidden">Submit</button>
+                {/* Visible Submit Button */}
+                <button
+                  type="submit"
+                  className="px-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs rounded-full flex items-center gap-1 transition-all shrink-0 shadow-sm"
+                >
+                  <span>Gửi</span>
+                  <Send className="w-3.5 h-3.5" />
+                </button>
               </form>
             </div>
           </div>
 
-          <p className="text-[9px] mt-14 text-center font-medium" style={{ color: "rgba(255,255,255,0.65)" }}>
+          <p className="text-[10px] mt-12 text-center font-medium text-blue-100/70">
             © 2026 SocialSense. Bảo lưu mọi quyền.
           </p>
         </section>
@@ -334,30 +366,36 @@ export default function App() {
 
 
       {/* ════════════════════════════════════════════════════════════════
-          DESKTOP VIEW ONLY (>= md): Brand-new Modern Desktop Landing Page
+          DESKTOP VIEW ONLY (>= md)
          ════════════════════════════════════════════════════════════════ */}
       <div className="hidden md:flex flex-col w-full min-h-screen" style={{ background: "#EFF6FF" }}>
         
-        {/* DESKTOP HEADER */}
-        <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/70 border-b border-blue-100 shadow-sm">
+        {/* DESKTOP HEADER (Sticky Nav) */}
+        <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/80 border-b border-blue-100 shadow-sm">
           <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="Social Sense" className="h-10 w-auto object-contain" />
             </div>
 
             <div className="flex items-center gap-10">
-              <button onClick={() => scrollToSection("about-desktop")} className="text-slate-700 hover:text-blue-600 font-semibold text-sm transition-colors">Về chúng tôi</button>
-              <button onClick={() => scrollToSection("features-desktop")} className="text-slate-700 hover:text-blue-600 font-semibold text-sm transition-colors">Tính năng</button>
-              <button onClick={() => scrollToSection("posts-desktop")} className="text-slate-700 hover:text-blue-600 font-semibold text-sm transition-colors">Bài viết</button>
-              <button onClick={() => scrollToSection("faq-desktop")} className="text-slate-700 hover:text-blue-600 font-semibold text-sm transition-colors">F&Q</button>
+              <button onClick={() => scrollToSection("about-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Về chúng tôi</button>
+              <button onClick={() => scrollToSection("features-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Tính năng</button>
+              <button onClick={() => scrollToSection("posts-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">Tips sử dụng</button>
+              <button onClick={() => scrollToSection("faq-desktop")} className="text-slate-700 hover:text-blue-600 font-bold text-sm transition-colors">F&Q</button>
             </div>
 
-            <div>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={focusRegistration}
+                className="px-5 py-2.5 rounded-full bg-blue-50 text-blue-600 font-bold text-xs hover:bg-blue-100 transition-all border border-blue-200"
+              >
+                Đăng ký trải nghiệm
+              </button>
               <a
                 href="https://drive.google.com/drive/folders/1Cyp88viSs6DUMPWnxFKvtknxyuWIaxMy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-slate-900 font-bold text-sm transition-all shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95"
+                className="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full text-slate-900 font-bold text-xs transition-all shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95"
                 style={{ background: "#A4C639" }}
               >
                 <Download className="w-4 h-4 text-slate-900" />
@@ -371,8 +409,10 @@ export default function App() {
         <section id="about-desktop" className="py-20 px-8 max-w-7xl mx-auto w-full grid grid-cols-12 gap-12 items-center">
           <div className="col-span-7 flex flex-col items-start pr-4">
             <h1 className="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.15] tracking-tight mb-6">
-              Trợ lí tí hon <br />
-              <span className="text-blue-600">cho các nhà sáng tạo</span>
+              Trợ lý tí hon <br />
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                cho các nhà sáng tạo
+              </span>
             </h1>
 
             <p className="text-base lg:text-lg text-slate-600 leading-relaxed mb-8 max-w-xl">
@@ -407,7 +447,7 @@ export default function App() {
 
               <button
                 onClick={focusRegistration}
-                className="px-7 py-4 rounded-2xl bg-white border border-blue-200 text-blue-600 font-bold text-base hover:bg-blue-50 transition-all shadow-sm"
+                className="px-7 py-4 rounded-2xl bg-white border border-blue-200 text-blue-600 font-bold text-base hover:bg-blue-50 transition-all shadow-md hover:shadow-lg"
               >
                 Đăng ký trải nghiệm
               </button>
@@ -477,58 +517,89 @@ export default function App() {
           </div>
         </section>
 
-        {/* DESKTOP FEATURES */}
+        {/* DESKTOP FEATURES (With visual images) */}
         <section id="features-desktop" className="py-20 px-8 max-w-7xl mx-auto w-full">
           <div className="text-center mb-14">
-            <span className="px-6 py-2.5 rounded-full text-xs lg:text-sm font-extrabold tracking-widest bg-blue-100 text-blue-600 border border-blue-200 inline-block">
+            <span className="px-6 py-2.5 rounded-full text-xs lg:text-sm font-extrabold tracking-widest bg-blue-100 text-blue-600 border border-blue-200 inline-block shadow-sm">
               SOCIAL SENSE CÓ NHỮNG GÌ?
             </span>
           </div>
 
           <div className="grid grid-cols-3 gap-8 items-stretch">
             {/* Feature 1 */}
-            <div className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1.5 duration-300 flex flex-col justify-between h-full">
+            <div className="bg-white rounded-3xl p-7 border border-blue-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1.5 duration-300 flex flex-col justify-between h-full group">
               <div>
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: "linear-gradient(135deg,#60A5FA,#3B82F6)" }}>
-                  <ImageIcon className="text-white w-8 h-8" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-md" style={{ background: "linear-gradient(135deg,#60A5FA,#3B82F6)" }}>
+                    <ImageIcon className="text-white w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900">Không lo bế tắc</h3>
+                    <p className="text-xs text-blue-600 font-semibold">Tự động gợi ý & tạo nội dung</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-extrabold text-slate-900 mb-3">Không lo bế tắc</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">Công cụ gợi ý caption sáng tạo, xây dựng kịch bản bài đăng theo ý muốn của bạn.</p>
+                <p className="text-xs text-slate-500 leading-relaxed mb-4">Gợi ý caption sáng tạo, xây dựng kịch bản video trend và thiết kế hình ảnh độc đáo.</p>
+                
+                {/* Visual Image */}
+                <div className="w-full overflow-hidden rounded-2xl border border-blue-100 shadow-sm">
+                  <img src="/card_features.png" alt="Không lo bế tắc" className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
               </div>
-              <div className="h-1.5 w-full rounded-full mt-8" style={{ background: "linear-gradient(90deg,#60A5FA,#93C5FD)" }} />
+              <div className="h-1.5 w-full rounded-full mt-6" style={{ background: "linear-gradient(90deg,#60A5FA,#93C5FD)" }} />
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1.5 duration-300 flex flex-col justify-between h-full">
+            <div className="bg-white rounded-3xl p-7 border border-blue-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1.5 duration-300 flex flex-col justify-between h-full group">
               <div>
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: "linear-gradient(135deg,#3B82F6,#2563EB)" }}>
-                  <BarChart2 className="text-white w-8 h-8" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-md" style={{ background: "linear-gradient(135deg,#3B82F6,#2563EB)" }}>
+                    <BarChart2 className="text-white w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900">Hỗ trợ qua các con số</h3>
+                    <p className="text-xs text-blue-600 font-semibold">Báo cáo & phân tích chỉ số</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-extrabold text-slate-900 mb-3">Hỗ trợ qua các con số</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">Báo cáo số liệu hữu ích, giúp bạn hiểu sâu sắc nền tảng và khán giả của mình.</p>
+                <p className="text-xs text-slate-500 leading-relaxed mb-4">Phân tích hiệu quả kênh, đo lường tương tác giúp bạn tối ưu kế hoạch đăng bài.</p>
+                
+                {/* Visual Image */}
+                <div className="w-full overflow-hidden rounded-2xl border border-blue-100 shadow-sm">
+                  <img src="/card_trend.png" alt="Hỗ trợ qua các con số" className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
               </div>
-              <div className="h-1.5 w-full rounded-full mt-8" style={{ background: "linear-gradient(90deg,#3B82F6,#60A5FA)" }} />
+              <div className="h-1.5 w-full rounded-full mt-6" style={{ background: "linear-gradient(90deg,#3B82F6,#60A5FA)" }} />
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1.5 duration-300 flex flex-col justify-between h-full">
+            <div className="bg-white rounded-3xl p-7 border border-blue-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1.5 duration-300 flex flex-col justify-between h-full group">
               <div>
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6" style={{ background: "linear-gradient(135deg,#93C5FD,#60A5FA)" }}>
-                  <Sparkles className="text-white w-8 h-8" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-md" style={{ background: "linear-gradient(135deg,#93C5FD,#60A5FA)" }}>
+                    <Sparkles className="text-white w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900">Xây dựng phong cách</h3>
+                    <p className="text-xs text-blue-600 font-semibold">Cá nhân hóa AI độc bản</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-extrabold text-slate-900 mb-3">Xây dựng phong cách</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">Cá nhân hoá AI theo từng người dùng để truyền tải đúng giọng văn độc bản.</p>
+                <p className="text-xs text-slate-500 leading-relaxed mb-4">Huấn luyện giọng văn AI chuẩn theo thương hiệu cá nhân của riêng bạn.</p>
+                
+                {/* Visual Image */}
+                <div className="w-full overflow-hidden rounded-2xl border border-blue-100 shadow-sm">
+                  <img src="/card_engagement.png" alt="Xây dựng phong cách" className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
               </div>
-              <div className="h-1.5 w-full rounded-full mt-8" style={{ background: "linear-gradient(90deg,#93C5FD,#3B82F6)" }} />
+              <div className="h-1.5 w-full rounded-full mt-6" style={{ background: "linear-gradient(90deg,#93C5FD,#3B82F6)" }} />
             </div>
           </div>
         </section>
 
-        {/* DESKTOP POSTS */}
+        {/* DESKTOP TIPS SỬ DỤNG */}
         <section id="posts-desktop" className="py-20 bg-blue-100/60 border-y border-blue-200/50">
           <div className="max-w-7xl mx-auto px-8 flex flex-col items-center">
-            <span className="px-6 py-2.5 rounded-full text-xs lg:text-sm font-extrabold tracking-widest bg-white text-blue-600 border border-blue-200 mb-14 shadow-sm">
-              CÁC BÀI VIẾT MỚI
+            <span className="px-6 py-2.5 rounded-full text-xs lg:text-sm font-extrabold tracking-widest bg-white text-blue-600 border border-blue-200 mb-12 shadow-sm flex items-center gap-2">
+              <Lightbulb className="w-4 h-4 text-blue-600" />
+              <span>TIPS SỬ DỤNG</span>
             </span>
             <div className="w-full max-w-4xl flex justify-center">
               <PostStack />
@@ -549,25 +620,25 @@ export default function App() {
           </div>
         </section>
 
-        {/* DESKTOP FOOTER */}
+        {/* DESKTOP FOOTER (With Visible Submit Button) */}
         <footer id="contact-desktop" className="bg-[#3B82F6] text-white pt-16 pb-12 px-8 mt-auto">
           <div className="max-w-7xl mx-auto grid grid-cols-12 gap-12 items-center pb-12 border-b border-white/20">
             <div className="col-span-5 pr-6">
               <img src="/logo.png" alt="Social Sense" className="h-11 w-auto mb-5 object-contain" style={{ filter: "brightness(0) invert(1)", opacity: 0.95 }} />
               <p className="text-sm text-blue-50 leading-relaxed max-w-md">
-                Social Sense - Công cụ hỗ trợ các nhà sáng tạo nội dung tự động tạo bài viết, phân tích chỉ số và theo dõi xu hướng hiệu quả nhất.
+                Social Sense - Trợ lý AI sáng tạo nội dung hàng đầu cho TikTok, Facebook và Instagram. Giúp bạn tiết kiệm 80% thời gian lên ý tưởng & viết bài.
               </p>
             </div>
 
             <div className="col-span-7 grid grid-cols-2 gap-8 items-start">
               <div>
                 <h3 className="text-base font-bold mb-3 text-white">Liên hệ với chúng tôi</h3>
-                <div className="flex h-12 rounded-full overflow-hidden shadow-md">
-                  <div className="w-24 flex items-center justify-center text-xs font-bold shrink-0 bg-white/20 text-white">
+                <div className="flex h-12 rounded-full overflow-hidden shadow-md bg-white p-1">
+                  <div className="w-20 flex items-center justify-center text-xs font-bold shrink-0 bg-blue-100 text-blue-700 rounded-full my-0.5 ml-0.5">
                     Gmail
                   </div>
-                  <div className="flex-1 bg-white flex items-center px-5">
-                    <a href="mailto:socialsense@gmail.com" className="text-sm font-bold text-blue-600 hover:underline">
+                  <div className="flex-1 bg-white flex items-center px-4">
+                    <a href="mailto:socialsense@gmail.com" className="text-sm font-bold text-blue-600 hover:underline truncate">
                       socialsense@gmail.com
                     </a>
                   </div>
@@ -576,11 +647,11 @@ export default function App() {
 
               <div>
                 <h3 className="text-base font-bold mb-3 text-white">Đăng ký bản thử nghiệm</h3>
-                <form onSubmit={handleSubmit} className="flex h-12 rounded-full overflow-hidden shadow-md">
-                  <div className="w-24 flex items-center justify-center text-xs font-bold shrink-0 bg-white/20 text-white">
+                <form onSubmit={handleSubmit} className="flex h-12 rounded-full overflow-hidden shadow-md bg-white p-1">
+                  <div className="w-20 flex items-center justify-center text-xs font-bold shrink-0 bg-blue-100 text-blue-700 rounded-full my-0.5 ml-0.5">
                     Gmail
                   </div>
-                  <div className="flex-1 bg-white flex items-center px-4">
+                  <div className="flex-1 bg-white flex items-center px-3">
                     <input
                       ref={registrationRef}
                       type="email"
@@ -591,7 +662,14 @@ export default function App() {
                       className="w-full outline-none bg-transparent text-sm text-slate-700 placeholder-slate-400"
                     />
                   </div>
-                  <button type="submit" className="hidden">Submit</button>
+                  {/* Visible Submit Button */}
+                  <button
+                    type="submit"
+                    className="px-5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs rounded-full flex items-center gap-1.5 transition-all shrink-0 shadow-sm"
+                  >
+                    <span>Gửi</span>
+                    <Send className="w-4 h-4" />
+                  </button>
                 </form>
               </div>
             </div>
@@ -602,6 +680,7 @@ export default function App() {
             <div className="flex gap-6">
               <button onClick={() => scrollToSection("about-desktop")} className="hover:underline">Về chúng tôi</button>
               <button onClick={() => scrollToSection("features-desktop")} className="hover:underline">Tính năng</button>
+              <button onClick={() => scrollToSection("posts-desktop")} className="hover:underline">Tips sử dụng</button>
               <button onClick={() => scrollToSection("faq-desktop")} className="hover:underline">Hỏi đáp</button>
             </div>
           </div>
@@ -610,8 +689,5 @@ export default function App() {
       </div>
 
     </div>
-
-
   );
 }
-
